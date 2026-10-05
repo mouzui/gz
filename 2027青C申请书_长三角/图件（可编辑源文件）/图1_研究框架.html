@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap"><meta charset="utf-8">
+<title>图1 研究框架</title>
+<style>
+:root{
+  --ink:#1f2937; --ink2:#374151; --muted:#4b5563;
+  --navy:#1f3b73; --navy-l:#e9eef7; --navy-b:#b9c6de;
+  --g:#3b7a3a; --g-l:#eef6ea; --g-b:#a9cda0;
+  --b:#2a5c9a; --b-l:#eaf1fa; --b-b:#a8c3e3;
+  --o:#bf5a36; --o-l:#fcefe9; --o-b:#ebbba7;
+  --p:#5e3f8f; --p-l:#f2edf8; --p-b:#c3b2de;
+  --gr:#6b7280; --gr-l:#f3f4f6; --gr-b:#9aa3ae;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#fff}
+#fig{width:1600px;padding:16px 16px 18px;background:#fff;font-family:'Noto Sans SC','Noto Sans CJK SC',sans-serif;color:var(--ink);font-size:24px;line-height:1.36}
+
+/* banner */
+.banner{background:var(--navy);color:#fff;border-radius:10px;padding:12px 22px 13px;text-align:center}
+.banner .q{font-size:28px;font-weight:700;letter-spacing:.2px}
+.banner .h{margin-top:6px;font-size:28px;font-weight:700}
+.banner .h span.hy{display:inline-block;background:#fff;color:var(--navy);border-radius:6px;padding:0 14px;margin-left:4px}
+.banner .lab{color:#ffd88a}
+
+/* generic row with side label */
+.row{display:flex;gap:12px;margin-top:14px;align-items:stretch}
+.side{width:60px;flex:0 0 60px;background:var(--navy-l);border:2px solid var(--navy-b);border-radius:8px;color:var(--navy);
+  font-size:22px;writing-mode:vertical-rl;text-orientation:mixed;display:flex;flex-direction:column;align-items:center;justify-content:center;letter-spacing:2px;line-height:1.15;padding:6px 0;gap:4px}
+.side .s1{font-weight:700;font-size:23px}
+.side .s2{font-weight:500;color:#3b4f7a}
+.main{flex:1;min-width:0}
+
+/* chain */
+.chain{display:grid;grid-template-columns:194fr 240fr 194fr 240fr 194fr 240fr 194fr;align-items:stretch}
+.node{background:#fff;border:2.5px solid var(--navy);border-radius:10px;overflow:hidden;display:flex;flex-direction:column}
+.node .nh{background:var(--navy);color:#fff;font-weight:700;font-size:24px;text-align:center;padding:5px 6px}
+.node .nb{flex:1;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:8px 10px;font-size:24px;font-weight:500;line-height:1.32}
+.node .nb .s{font-size:22px;font-weight:400;color:var(--ink2);margin-top:2px}
+.arr{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:8px 4px 0}
+.arr .st{font-size:27px;font-weight:700;line-height:1.2}
+.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin-top:7px}
+.chips span{font-size:22px;font-weight:500;color:var(--navy);background:var(--navy-l);border:1.5px solid var(--navy-b);border-radius:6px;padding:0 7px;line-height:1.35}
+.arr svg{display:block;width:100%;height:38px;margin:4px 0 5px}
+.arr .me{font-size:22px;color:var(--ink2);text-align:center;line-height:1.3}
+.arr.A .st{color:var(--g)} .arr.B .st{color:var(--b)} .arr.C .st{color:var(--o)}
+.levels{display:grid;grid-template-columns:194fr 240fr 194fr 240fr 194fr 240fr 194fr;margin-top:10px;position:relative}
+.levels::before{content:"";position:absolute;left:4%;right:4%;top:50%;border-top:2px dotted #9fb0cf}
+.pill{justify-self:center;font-size:22px;font-weight:700;color:var(--navy);background:#fff;border:2px dashed var(--navy);border-radius:999px;padding:1px 16px;position:relative;white-space:nowrap}
+.pill i{font-style:normal;font-weight:500;color:var(--muted);margin-right:6px}
+.pgrp{justify-self:center;display:flex;gap:12px;position:relative}
+
+
+/* three columns */
+.cols{display:grid;grid-template-columns:1fr 1fr 1fr;column-gap:34px}
+.kq{border-radius:10px;border:2px solid;padding:9px 16px 10px}
+.kq.g{background:var(--g-l);border-color:var(--g-b)} .kq.b{background:var(--b-l);border-color:var(--b-b)} .kq.o{background:var(--o-l);border-color:var(--o-b)}
+.kqh{font-size:25px;font-weight:700;display:flex;align-items:center;gap:10px}
+.kq.g .kqh{color:var(--g)} .kq.b .kqh{color:var(--b)} .kq.o .kqh{color:var(--o)}
+.tag{display:inline-block;color:#fff;border-radius:6px;padding:0 9px;font-size:23px;line-height:1.35}
+.g .tag{background:var(--g)} .b .tag{background:var(--b)} .o .tag{background:var(--o)}
+.kqq{font-size:24px;margin-top:4px;padding-bottom:7px;border-bottom:1.5px solid rgba(0,0,0,.14)}
+.hyp{font-size:23px;margin-top:6px;line-height:1.3}
+.hyp b{display:inline-block;min-width:52px;font-weight:700}
+.kq.g .hyp b{color:var(--g)} .kq.b .hyp b{color:var(--b)} .kq.o .hyp b{color:var(--o)}
+
+.ctwrap{position:relative}
+.ct{border-radius:10px;border:2px solid;overflow:visible;position:relative;background:#fff}
+.ct.g{border-color:var(--g)} .ct.b{border-color:var(--b)} .ct.o{border-color:var(--o)}
+.ct::before{content:'';position:absolute;left:50%;top:-17px;transform:translateX(-50%);border:10px solid transparent;border-bottom:0;border-top:12px solid}
+.ct.g::before{border-top-color:var(--g)} .ct.b::before{border-top-color:var(--b)} .ct.o::before{border-top-color:var(--o)}
+.cth{color:#fff;padding:7px 14px 8px;border-radius:7px 7px 0 0;text-align:center}
+.ct.g .cth{background:var(--g)} .ct.b .cth{background:var(--b)} .ct.o .cth{background:var(--o)}
+.cth .n{font-size:22px;font-weight:500;opacity:.95}
+.cth .t{font-size:24px;font-weight:700;line-height:1.3}
+.ct ul{list-style:none;padding:8px 14px 10px}
+.ct li{font-size:23px;line-height:1.32;padding-left:20px;position:relative;margin:3px 0}
+.ct li::before{content:'';position:absolute;left:3px;top:.55em;width:9px;height:9px;border-radius:2px}
+.ct.g li::before{background:var(--g)} .ct.b li::before{background:var(--b)} .ct.o li::before{background:var(--o)}
+.ct.g{background:var(--g-l)} .ct.b{background:var(--b-l)} .ct.o{background:var(--o-l)}
+.hop{position:absolute;top:50%;width:34px;height:40px;transform:translateY(-50%)}
+.unc{margin-top:12px;border:2.5px dashed var(--gr-b);border-radius:10px;background:var(--gr-l);color:var(--ink2);font-size:23px;text-align:center;padding:6px 12px}
+.unc b{color:#374151}
+.unc .ar{color:var(--gr);font-weight:700;margin:0 4px}
+
+.downs{display:grid;grid-template-columns:1fr 1fr 1fr;column-gap:34px;height:26px;margin-left:72px}
+.downs div{position:relative}
+.downs div::after{content:'';position:absolute;left:50%;top:5px;transform:translateX(-50%);border:13px solid transparent;border-bottom:0;border-top:16px solid var(--p)}
+
+.integ{background:var(--p);border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:10px;flex-wrap:nowrap}
+.integ .ttl{color:#fff;font-weight:700;font-size:25px;padding:0 8px 0 6px;white-space:nowrap}
+.integ .it{background:var(--p-l);color:var(--p);font-weight:700;font-size:23px;border-radius:7px;padding:4px 12px;white-space:nowrap}
+.integ .ext{margin-left:auto;background:#fff;color:var(--gr);border:2.5px dashed var(--gr-b);font-weight:500;font-size:23px;border-radius:7px;padding:2px 12px;white-space:nowrap}
+
+.scale{margin-top:14px;background:var(--navy-l);border:2px solid var(--navy-b);border-radius:10px;padding:9px 12px;display:flex;align-items:stretch;gap:10px}
+.scale .ttl{flex:0 0 auto;display:flex;align-items:center;font-weight:700;font-size:25px;color:var(--navy);padding:0 6px}
+.scale .lv{flex:1 1 0;min-width:0;background:#fff;border:2px solid var(--navy-b);border-radius:8px;padding:6px 14px 7px}
+.scale .lvt{display:inline-block;background:var(--navy);color:#fff;font-weight:700;font-size:22px;border-radius:6px;padding:0 9px;line-height:1.35;margin-right:10px;vertical-align:1px}
+.scale .lv3 .lvt{background:#4a6fb0}
+.scale .l1{font-size:23px;line-height:1.36;color:var(--ink);white-space:nowrap}
+.scale .l1 b{font-weight:700;color:var(--navy)}
+.scale .l2{font-size:22px;line-height:1.36;color:var(--ink2);margin-top:3px;white-space:nowrap}
+.scale .cal{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--navy);font-weight:700;font-size:22px;line-height:1.1}
+.scale .cal svg{width:64px;height:22px;margin-top:4px}
+sub{font-size:.7em;line-height:0}
+.base{margin-top:14px;background:var(--gr-l);border:2px solid #d1d5db;border-radius:10px;padding:9px 12px;display:flex;align-items:stretch;gap:10px}
+.base .ttl{flex:0 0 auto;display:flex;align-items:center;font-weight:700;font-size:25px;color:var(--ink2);padding:0 6px}
+.base .cell{min-width:0;background:#fff;border:1.5px solid #d1d5db;border-radius:7px;font-size:23px;line-height:1.3;padding:5px 10px;display:flex;align-items:center;justify-content:center;text-align:center}
+.base .cell b{font-weight:700}
+</style></head>
+<body>
+<div id="fig">
+
+  <div class="banner">
+    <div class="q"><span class="lab">核心科学问题：</span>长三角湿热河网城市群中，NbS的降温功能如何经城市形态过滤、并与人群逐时活动耦合，<br>转化为不同人群实得的降温保护，进而减少热相关健康损失？</div>
+    <div class="h"><span class="lab">核心假说：</span><span class="hy">资源公平不等于保护公平</span></div>
+  </div>
+
+  <!-- Row 1: theory chain -->
+  <div class="row">
+    <div class="side"><span class="s1">理论框架</span><span class="s2">生态系统服务级联</span></div>
+    <div class="main">
+      <div class="chain">
+        <div class="node"><div class="nh">生态结构与过程</div><div class="nb">九类NbS<div class="chips"><span>遮荫</span><span>蒸散</span><span>通风</span></div></div></div>
+        <div class="arr A"><div class="st">形态过滤</div>
+          <svg viewBox="0 0 180 38" preserveAspectRatio="none"><polygon points="0,11 146,11 146,0 180,19 146,38 146,27 0,27" fill="#3b7a3a"/></svg>
+          <div class="me">建筑遮荫·街谷几何·<br>通风·湿度</div></div>
+        <div class="node"><div class="nh">生态功能</div><div class="nb">NbS可归因降温<div class="chips"><span>ΔTa</span><span>ΔUTCI</span><span>逐时</span></div></div></div>
+        <div class="arr B"><div class="st">时空耦合</div>
+          <svg viewBox="0 0 180 38" preserveAspectRatio="none"><polygon points="0,11 146,11 146,0 180,19 146,38 146,27 0,27" fill="#2a5c9a"/></svg>
+          <div class="me">在场人·小时<br>（居住地—工作地—<br>交通节点—步行通勤）</div></div>
+        <div class="node"><div class="nh">服务</div><div class="nb">实得降温保护<br>DCP<div class="s">（人·小时）</div></div></div>
+        <div class="arr C"><div class="st">健康转化</div>
+          <svg viewBox="0 0 180 38" preserveAspectRatio="none"><polygon points="0,11 146,11 146,0 180,19 146,38 146,27 0,27" fill="#bf5a36"/></svg>
+          <div class="me">暴露—反应关系<br>（DLNM）</div></div>
+        <div class="node"><div class="nh">惠益</div><div class="nb">已避免的热相关<br>死亡与归因分值<div class="s">（就诊为探索性）</div></div></div>
+      </div>
+      <div class="levels">
+        <div class="pill" style="grid-column:1"><i>层次一</i>资源供给</div>
+        <div class="pgrp" style="grid-column:4 / 7"><div class="pill"><i>层次二</i>实得保护</div><div class="pill"><i>层次三</i>保护缺口</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 2: KQs and hypotheses -->
+  <div class="row">
+    <div class="side"><span class="s1">科学问题与假说</span></div>
+    <div class="main cols">
+      <div class="kq g">
+        <div class="kqh"><span class="tag">KQ1</span>形态过滤</div>
+        <div class="kqq">可归因降温如何随类型、形态与时段<br>变化？何时减弱或反转？在41城间<br>如何随背景气候与水网密度变化？</div>
+        <div class="hyp"><b>H1a</b>表观降温≠可归因降温</div>
+        <div class="hyp"><b>H1b</b>降气温≠降热负荷（河湖滨水）</div>
+      </div>
+      <div class="kq b">
+        <div class="kqh"><span class="tag">KQ2</span>时空耦合</div>
+        <div class="kqq">降温与人群逐时在场的时空匹配如何<br>决定DCP及其分配？资源公平是否<br>意味着保护公平？</div>
+        <div class="hyp"><b>H2a</b>资源公平≠保护公平</div>
+        <div class="hyp"><b>H2b</b>缺口源于类型、时段与形态</div>
+      </div>
+      <div class="kq o">
+        <div class="kqh"><span class="tag">KQ3</span>健康转化</div>
+        <div class="kqq">DCP能否比静态蓝绿空间指标更好地<br>解释热相关死亡？现有NbS已避免<br>多少健康损失？</div>
+        <div class="hyp"><b>H3a</b>DCP修饰项样本外偏差更低</div>
+        <div class="hyp"><b>H3b</b>已避免死亡分配≠DCP分配</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 3: research contents -->
+  <div class="row" style="margin-top:20px">
+    <div class="side"><span class="s1">研究内容</span></div>
+    <div class="main">
+      <div class="cols ctwrap">
+        <div class="ct g">
+          <div class="cth"><div class="n">研究内容一</div><div class="t">NbS可归因降温的形态过滤<br>与逐时识别</div></div>
+          <ul>
+            <li>YRD-HES构建与验证（1&nbsp;km／30&nbsp;m）</li>
+            <li>九类NbS与城市形态逐年重建</li>
+            <li>形态分层＋遮荫分离＋GAM/SHAP</li>
+            <li>DID＋ENVI-met＋去NbS变量模型<br>三重检验</li>
+            <li>41城区域异质性（多层次模型）</li>
+          </ul>
+        </div>
+        <div class="ct b">
+          <div class="cth"><div class="n">研究内容二</div><div class="t">DCP的时空耦合<br>与分配公平</div></div>
+          <ul>
+            <li>三城手机信令＋普查→逐时在场</li>
+            <li>DCP与DCP缺口；全域DCP<sub>res</sub></li>
+            <li>资源供给—实得保护—保护缺口</li>
+            <li>基尼系数、集中指数与来源分解</li>
+          </ul>
+        </div>
+        <div class="ct o">
+          <div class="cth"><div class="n">研究内容三</div><div class="t">DCP的健康检验<br>与已避免负担估算</div></div>
+          <ul>
+            <li>暴露变量与效应修饰两层比较</li>
+            <li>DLNM年份分块样本外偏差</li>
+            <li>三城乡镇街道检验＋区县外部效度</li>
+            <li>无NbS反事实下已避免死亡与归因分值</li>
+            <li>按年龄、社会经济与暴露分组</li>
+          </ul>
+        </div>
+        <svg class="hop" id="hop1" viewBox="0 0 34 40"><polygon points="2,13 20,13 20,3 33,20 20,37 20,27 2,27" fill="#4b5563"/></svg>
+        <svg class="hop" id="hop2" viewBox="0 0 34 40"><polygon points="2,13 20,13 20,3 33,20 20,37 20,27 2,27" fill="#4b5563"/></svg>
+      </div>
+      <div class="unc"><b>不确定性逐级传递：</b>YRD-HES误差<span class="ar">→</span>NbS重建精度<span class="ar">→</span>归因不确定性<span class="ar">→</span>DCP、不平等指数与健康估计的置信区间</div>
+    </div>
+  </div>
+
+  <div class="downs"><div></div><div></div><div></div></div>
+
+  <!-- Row 4: integration -->
+  <div class="integ">
+    <div class="ttl">证据集成与转化</div>
+    <div class="it">NbS降温保护矩阵与设计禁忌</div>
+    <div class="it">精细化高温风险信息规范</div>
+    <div class="it">政策简报</div>
+    <div class="it">两场实务人员工作坊</div>
+  </div>
+
+  <!-- Row 5: two-level study design -->
+  <div class="scale">
+    <div class="ttl">两级尺度</div>
+    <div class="lv">
+      <div class="l1"><span class="lvt">全域层</span><b>长三角41城</b>建成区·<b>1&nbsp;km逐时</b>·区县</div>
+      <div class="l2">探索性外部效度：41城异质性、DCP<sub>res</sub>、区县DLNM</div>
+    </div>
+    <div class="cal"><span>校准</span><svg viewBox="0 0 64 22"><polygon points="62,8 16,8 16,1 2,11 16,21 16,14 62,14" fill="#1f3b73"/></svg></div>
+    <div class="lv lv3">
+      <div class="l1"><span class="lvt">三城层</span><b>杭州·上海·南京</b>中心城区·<b>30&nbsp;m逐时</b>·乡镇街道</div>
+      <div class="l2">精细识别与全部假说检验：KQ1—KQ3</div>
+    </div>
+  </div>
+
+  <!-- Row 6: data base -->
+  <div class="base">
+    <div class="ttl">数据底座</div>
+    <div class="cell" style="flex:1 1 390px"><span><b>YRD-HES</b><br>（2000—2024年，逐时Ta、UTCI）</span></div>
+    <div class="cell" style="flex:1 1 200px">九类NbS逐年重建</div>
+    <div class="cell" style="flex:1 1 165px">城市形态分层</div>
+    <div class="cell" style="flex:1 1 300px"><span>三城手机信令＋第五至七次<br>人口普查（乡镇街道）</span></div>
+    <div class="cell" style="flex:1 1 300px"><span>乡镇街道／区县逐日死亡<br>＋住院/医保就诊（探索性）</span></div>
+  </div>
+
+</div>
+<script>
+// place the small "flow" arrows in the gaps between the three research-content boxes
+document.fonts.ready.then(function(){
+  var wrap=document.querySelector('.ctwrap'), boxes=wrap.querySelectorAll('.ct');
+  var w=wrap.getBoundingClientRect();
+  [[0,'hop1'],[1,'hop2']].forEach(function(p){
+    var r=boxes[p[0]].getBoundingClientRect();
+    var el=document.getElementById(p[1]);
+    el.style.left=(r.right-w.left)+'px';
+  });
+});
+</script>
+</body></html>

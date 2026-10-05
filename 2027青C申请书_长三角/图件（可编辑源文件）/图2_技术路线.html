@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap"><meta charset="utf-8">
+<title>图2 技术路线</title>
+<style>
+:root{
+  --ink:#1f2937; --ink2:#374151; --muted:#4b5563;
+  --navy:#1f3b73; --navy-l:#e9eef7; --navy-b:#b9c6de;
+  --g:#3b7a3a; --g-l:#eef6ea; --g-b:#a9cda0;
+  --b:#2a5c9a; --b-l:#eaf1fa; --b-b:#a8c3e3;
+  --o:#bf5a36; --o-l:#fcefe9; --o-b:#ebbba7;
+  --p:#5e3f8f; --p-l:#f2edf8; --p-b:#c3b2de;
+  --gr:#6b7280; --gr-l:#f3f4f6; --gr-b:#9aa3ae;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#fff}
+#fig{width:1600px;padding:16px;background:#fff;font-family:'Noto Sans SC','Noto Sans CJK SC',sans-serif;color:var(--ink);font-size:23px;line-height:1.36;position:relative}
+#lines{position:absolute;left:0;top:0;z-index:0;pointer-events:none}
+.grid{position:relative;z-index:1;display:grid;
+  grid-template-columns:58px 12px 1fr 56px 1fr 56px 1fr 40px 266px;
+  row-gap:32px;align-items:stretch}
+
+/* headers */
+.ch{border-radius:10px;color:#fff;text-align:center;padding:7px 10px 8px}
+.ch .n{font-size:24px;font-weight:700}
+.ch .t{font-size:22px;font-weight:500;line-height:1.3;opacity:.97}
+.ch.g{background:var(--g)} .ch.b{background:var(--b)} .ch.o{background:var(--o)}
+.th{border-radius:10px;background:var(--navy);color:#fff;text-align:center;padding:7px 8px;display:flex;flex-direction:column;justify-content:center}
+.th .n{font-size:24px;font-weight:700}
+.th .t{font-size:22px;font-weight:500}
+
+/* layer labels */
+.lab{grid-column:1;background:var(--navy-l);border:2px solid var(--navy-b);border-radius:8px;color:var(--navy);font-weight:700;font-size:23px;
+  writing-mode:vertical-rl;display:flex;align-items:center;justify-content:center;letter-spacing:3px}
+
+/* cells */
+.cell{border-radius:9px;border:2px solid;padding:8px 12px 9px;background:#fff}
+.cell.g{background:var(--g-l);border-color:var(--g-b)} .cell.b{background:var(--b-l);border-color:var(--b-b)} .cell.o{background:var(--o-l);border-color:var(--o-b)}
+.cell ul{list-style:none}
+.cell li{position:relative;padding-left:17px;margin:2px 0}
+.cell li::before{content:'';position:absolute;left:1px;top:.58em;width:8px;height:8px;border-radius:2px}
+.cell.g li::before{background:var(--g)} .cell.b li::before{background:var(--b)} .cell.o li::before{background:var(--o)}
+.cell p{margin:2px 0}
+.c1{grid-column:3} .c2{grid-column:5} .c3{grid-column:7}
+.res{font-weight:500}
+.hx{display:inline-block;font-weight:700;color:#fff;border-radius:5px;padding:0 7px;margin-left:4px;font-size:22px;line-height:1.35}
+.g .hx{background:var(--g)} .b .hx{background:var(--b)} .o .hx{background:var(--o)}
+.fx{display:block;background:#fff;border:1.5px solid var(--b-b);border-radius:6px;padding:3px 8px;margin:2px 0 4px;font-weight:500;color:#173f73;text-align:center}
+.fx sub{font-size:18px;line-height:0}
+.pre{border:2.5px dashed var(--o);border-radius:7px;background:#fff;padding:4px 8px 5px;margin:2px 0 6px;position:relative}
+.pre .tg{display:inline-block;background:var(--o);color:#fff;font-weight:700;font-size:22px;border-radius:5px;padding:0 7px;margin-right:6px;line-height:1.35}
+
+/* milestone diamond badge */
+.ms{display:inline-flex;align-items:center;gap:3px;font-weight:700;margin-right:4px;white-space:nowrap}
+.ms svg{width:22px;height:26px;flex:0 0 auto}
+.g .ms{color:var(--g)} .b .ms{color:var(--b)} .o .ms{color:var(--o)}
+
+/* gate band */
+.gate{grid-column:5 / 8;display:flex;align-items:center;justify-content:center;gap:14px;background:#fffaf0;border:2px solid #e3c98f;border-radius:10px;padding:8px 14px}
+.gate .q{display:flex;align-items:center;gap:10px;font-weight:700;color:#7a5410;line-height:1.3;white-space:nowrap}
+.gate .q .dmd{width:76px;height:52px;flex:0 0 auto}
+.gate .no{display:flex;flex-direction:column;align-items:center;color:#7a5410;font-weight:700;font-size:22px;line-height:1}
+.gate .no svg{width:58px;height:22px;margin-top:4px}
+.gate .alt{white-space:nowrap;border:2.5px dashed #c79a3c;border-radius:8px;background:#fff;padding:4px 12px;color:var(--ink2);line-height:1.3}
+.gate .alt b{color:#7a5410}
+
+/* uncertainty */
+.unc{grid-column:3 / 8;position:relative;height:40px}
+.unc .pill{position:absolute;top:50%;transform:translate(-50%,-50%);background:var(--gr-l);border:2.5px dashed var(--gr-b);border-radius:999px;color:var(--ink2);font-weight:500;padding:1px 16px;white-space:nowrap;font-size:22px}
+
+/* integration band */
+.integ{grid-column:1 / 8;background:var(--p);border-radius:10px;padding:10px 14px 11px;color:#fff}
+.integ .l1{display:grid;grid-template-columns:auto 1fr;column-gap:10px;align-items:start}
+.integ .its{display:flex;flex-wrap:wrap;gap:8px}
+.integ .ttl{font-weight:700;font-size:25px;display:flex;align-items:center;gap:6px;margin-right:4px}
+.integ .ttl svg{width:26px;height:30px}
+.integ .it{background:var(--p-l);color:var(--p);font-weight:700;border-radius:7px;padding:2px 11px;white-space:nowrap}
+.integ .l2{margin-top:9px;background:rgba(255,255,255,.14);border:1.5px dashed rgba(255,255,255,.75);border-radius:8px;padding:4px 12px;font-size:22px;font-weight:500}
+.integ .l2 b{font-weight:700}
+
+/* timeline */
+.tl{grid-column:9;display:flex;flex-direction:column;gap:12px}
+.yr{flex:1;border:2px solid var(--navy-b);border-radius:10px;background:#f7f9fc;padding:0 0 8px;position:relative;overflow:hidden}
+.yr .y{background:var(--navy);color:#fff;font-weight:700;font-size:24px;text-align:center;padding:3px 0}
+.yr:nth-child(2) .y{background:#2f5597} .yr:nth-child(3) .y{background:#4a6fb0}
+.ev{margin:9px 8px 0 10px;font-size:22px;line-height:1.3;padding-left:12px;border-left:3px solid var(--navy-b)}
+.ev .h{font-weight:700;color:var(--navy);display:flex;align-items:center;gap:4px}
+.ev .h svg{width:20px;height:24px}
+.ev.ws{border-left-color:var(--p-b)} .ev.ws .h{color:var(--p)}
+.ev.rl{border-left-color:var(--g-b)} .ev.rl .h{color:var(--g)}
+.ev.gt{border-left-color:#e3c98f} .ev.gt .h{color:#7a5410}
+
+/* footnote */
+.foot{grid-column:1 / 10;display:flex;justify-content:space-between;gap:20px;font-size:22px;color:var(--ink2);margin-top:-14px}
+.foot .lg{display:flex;align-items:center;gap:16px;white-space:nowrap}
+.foot .lg span{display:inline-flex;align-items:center;gap:5px}
+.foot .lg svg{width:20px;height:24px}
+.foot .lg .dsh{display:inline-block;width:34px;border-top:3px dashed var(--gr-b)}
+
+.sv{display:inline-block;font-size:19px;font-weight:700;line-height:1.3;border-radius:5px;padding:0 5px;margin-right:5px;vertical-align:2px;color:#fff;font-style:normal}
+.sv.c41{background:var(--navy)} .sv.c3{background:#4a6fb0}
+sub{font-size:.7em;line-height:0}
+.gl{position:absolute;z-index:2;writing-mode:vertical-rl;font-size:22px;font-weight:700;line-height:1;letter-spacing:1px;white-space:nowrap;background:#fff;padding:6px 1px}
+.yes{position:absolute;z-index:2;font-size:22px;font-weight:700;color:#7a5410;background:#fff;line-height:1.1;padding:0 2px}
+</style></head>
+<body>
+<div id="fig">
+<svg id="lines"></svg>
+<div class="grid" id="grid">
+
+  <!-- header row -->
+  <div style="grid-column:1 / 3"></div>
+  <div class="ch g c1"><div class="n">研究内容一（KQ1）</div><div class="t">NbS可归因降温的形态过滤<br>与逐时识别</div></div>
+  <div class="ch b c2"><div class="n">研究内容二（KQ2）</div><div class="t">DCP的时空耦合<br>与分配公平</div></div>
+  <div class="ch o c3"><div class="n">研究内容三（KQ3）</div><div class="t">DCP的健康检验<br>与已避免负担估算</div></div>
+  <div class="th" style="grid-column:9"><div class="n">进度与节点</div><div class="t">2028—2030年</div></div>
+
+  <!-- data layer -->
+  <div class="lab" style="grid-row:2">数据层</div>
+  <div class="cell g c1" id="d1" style="grid-row:2"><ul>
+    <li>国家级站、区域自动站、ISD；<br>ERA5-Land、CMFD</li>
+    <li>Landsat 5/7/8/9、MODIS、<br>ECOSTRESS、Sentinel-2、<br><span style="white-space:nowrap">Himawari-8/9</span></li>
+    <li>CNBH-10m、冠层高度；<br>CLCD、GLC_FCS30D、街景</li></ul></div>
+  <div class="cell b c2" id="d2" style="grid-row:2"><ul>
+    <li><i class="sv c3">三城</i>手机信令：职住OD、<br>逐时在场、分年龄段人口</li>
+    <li>第五至七次人口普查<br>（乡镇街道）、七普100&nbsp;m格网</li>
+    <li>社会经济代理：住房条件、<br>老旧小区、流动人口比例</li></ul></div>
+  <div class="cell o c3" id="d3" style="grid-row:2"><ul>
+    <li><i class="sv c3">三城</i>乡镇街道逐日死亡</li>
+    <li><i class="sv c41">全域</i>区县逐日死亡<br>（死因监测）</li>
+    <li>住院/医保就诊（探索性）</li></ul></div>
+
+  <!-- gate G1 -->
+  <div class="gate" id="gate" style="grid-row:3">
+    <div class="q"><svg class="dmd" viewBox="0 0 76 52"><polygon points="38,2 74,26 38,50 2,26" fill="#fff4dc" stroke="#b7862a" stroke-width="3"/><text x="38" y="34" text-anchor="middle" font-size="22" font-weight="700" fill="#7a5410" font-family="Noto Sans SC">G1</text></svg>
+      <span>2028年12月数据闸门：<br>信令与死亡数据是否满足？</span></div>
+    <div class="no">否<svg viewBox="0 0 70 22"><line x1="2" y1="11" x2="56" y2="11" stroke="#b7862a" stroke-width="3.5"/><polygon points="54,3 68,11 54,19" fill="#b7862a"/></svg></div>
+    <div class="alt"><b>备选：</b>信令活动结构＋<br>普查人口回推；死亡数据<br>受限时以其余城市检验</div>
+  </div>
+
+  <!-- processing layer -->
+  <div class="lab" style="grid-row:4">处理层</div>
+  <div class="cell g c1" id="p1" style="grid-row:4"><ul>
+    <li>梯度提升树降尺度<br>（站点日变化＋时间协变量）<br>→YRD-HES（Ta、UTCI）：<br><i class="sv c41">全域</i>1&nbsp;km／<i class="sv c3">三城</i>30&nbsp;m逐时；<br>三城Tmrt由建筑/冠层阴影计算</li>
+    <li>标签迁移逐年回溯→九类NbS</li>
+    <li>形态指标聚类→城市形态分层</li></ul></div>
+  <div class="cell b c2" id="p2" style="grid-row:4"><ul>
+    <li><i class="sv c3">三城</i>四类场景逐时在场人口<br>与停留时长（夜间居住地／<br>日间工作地／交通节点／<br>步行通勤）</li>
+    <li>普查人口约束；信令未覆盖<br>年份以活动结构回推</li>
+    <li><i class="sv c41">全域</i>居住人口（DCP<sub>res</sub>）</li></ul></div>
+  <div class="cell o c3" id="p3" style="grid-row:4">
+    <div class="pre"><span class="tg">先行</span>基线DLNM（站点气温、居住地温度，2028年）</div>
+    <ul><li>暴露变量层：站点／居住地／<br>动态暴露</li><li>效应修饰层：人均DCP<br>对比静态蓝绿指标</li></ul></div>
+
+  <!-- identification & measurement layer -->
+  <div class="lab" style="grid-row:5">识别与测度层</div>
+  <div class="cell g c1" id="i1" style="grid-row:5"><p>形态分层内有/无NbS比较<br>→遮荫分离→GAM＋SHAP<br>（梯度提升树＋SHAP核对）</p><p style="margin-top:4px"><i class="sv c41">全域</i>多层次模型→41城异质性</p></div>
+  <div class="cell b c2" id="i2" style="grid-row:5">
+    <span class="fx">DCP＝Σ<sub>k</sub>Σ在场人·小时<br>×[I(U<sub>反</sub>≥θ<sub>k</sub>)−I(U≥θ<sub>k</sub>)]</span>
+    <p>人均DCP；DCP缺口</p></div>
+  <div class="cell o c3" id="i3" style="grid-row:5"><p>DLNM暴露—反应与滞后<br>（同一人群与分层）</p></div>
+
+  <!-- test layer -->
+  <div class="lab" style="grid-row:6">检验层</div>
+  <div class="cell g c1" id="t1" style="grid-row:6">
+    <p><span class="ms"><svg viewBox="0 0 22 26"><polygon points="11,2 20,13 11,24 2,13" fill="#fff" stroke="currentColor" stroke-width="2.6"/></svg>M2</span>五折空间分块留站验证<br>（昼/夜、高温日/夜间高温；<br>以常规插值为基准）</p>
+    <p style="margin-top:6px"><span class="ms"><svg viewBox="0 0 22 26"><polygon points="11,2 20,13 11,24 2,13" fill="#fff" stroke="currentColor" stroke-width="2.6"/></svg>M3</span>三重检验：<br>DID（滨水贯通与新建公园等）<br>＋ENVI-met移除试验<br>＋去NbS变量模型</p><p style="margin-top:6px"><i class="sv c41">全域</i>三城聚合1&nbsp;km比对<br>（尺度一致性）</p></div>
+  <div class="cell b c2" id="t2" style="grid-row:6">
+    <p><span class="ms"><svg viewBox="0 0 22 26"><polygon points="11,2 20,13 11,24 2,13" fill="#fff" stroke="currentColor" stroke-width="2.6"/></svg>M4</span>三层次比较；<br>基尼系数、集中曲线与<br>集中指数；来源分解<br>（数量／类型／时段／形态）</p><p style="margin-top:6px"><i class="sv c41">全域</i>DCP<sub>res</sub>区域格局</p></div>
+  <div class="cell o c3" id="t3" style="grid-row:6">
+    <p><span class="ms"><svg viewBox="0 0 22 26"><polygon points="11,2 20,13 11,24 2,13" fill="#fff" stroke="currentColor" stroke-width="2.6"/></svg>M5</span>年份分块（主）与<br>空间分块（辅）样本外偏差；<br><i class="sv c3">三城</i>乡镇街道核心检验<br><i class="sv c41">全域</i>区县外部效度；<br>无NbS反事实归因负担</p></div>
+
+  <!-- uncertainty -->
+  <div class="unc" id="unc" style="grid-row:7"><div class="pill" id="uncpill">不确定性传递（重采样与暴露扰动）</div></div>
+
+  <!-- results layer -->
+  <div class="lab" style="grid-row:8">成果层</div>
+  <div class="cell g c1 res" id="r1" style="grid-row:8"><p>逐时可归因降温<br>（类型×形态×时段×天气，<br>含失效/反转）<span class="hx">→H1</span></p></div>
+  <div class="cell b c2 res" id="r2" style="grid-row:8"><p>DCP与DCP缺口图谱；<br>三层次公平评估<span class="hx">→H2</span></p></div>
+  <div class="cell o c3 res" id="r3" style="grid-row:8"><p>分组已避免死亡与<br>归因分值（含不确定区间）<span class="hx">→H3</span></p></div>
+
+  <!-- integration -->
+  <div class="integ" id="integ" style="grid-row:9">
+    <div class="l1">
+      <div class="ttl"><svg viewBox="0 0 26 30"><polygon points="13,2 24,15 13,28 2,15" fill="none" stroke="#fff" stroke-width="3"/></svg>M6　证据集成与转化 →</div>
+      <div class="its"><span class="it">NbS降温保护矩阵</span><span class="it">风险信息规范</span><span class="it">政策简报</span><span class="it">YRD-HES数据与代码（2029年6月公开）</span><span class="it">论文3篇</span></div>
+    </div>
+    <div class="l2"><b>反馈环：</b>工作坊1（2028年第4季度，问题界定）／工作坊2（2030年第2季度，规范检验，Cohen's κ）</div>
+  </div>
+
+  <!-- timeline -->
+  <div class="tl" style="grid-row:2 / 10">
+    <div class="yr"><div class="y">2028年</div>
+      <div class="ev"><div class="h"><svg viewBox="0 0 20 24"><polygon points="10,2 18,12 10,22 2,12" fill="#fff" stroke="#1f3b73" stroke-width="2.4"/></svg>M1　3月</div>伦理审查申请提交</div>
+      <div class="ev"><div class="h"><svg viewBox="0 0 20 24"><polygon points="10,2 18,12 10,22 2,12" fill="#fff" stroke="#1f3b73" stroke-width="2.4"/></svg>M2　12月</div>YRD-HES验证报告</div>
+      <div class="ev gt"><div class="h"><svg viewBox="0 0 20 24"><polygon points="10,2 18,12 10,22 2,12" fill="#fff4dc" stroke="#b7862a" stroke-width="2.4"/></svg>G1　12月</div>数据闸门</div>
+      <div class="ev ws"><div class="h">工作坊1</div>第4季度，问题界定</div>
+    </div>
+    <div class="yr"><div class="y">2029年</div>
+      <div class="ev rl"><div class="h">6月</div>YRD-HES与代码公开</div>
+      <div class="ev"><div class="h"><svg viewBox="0 0 20 24"><polygon points="10,2 18,12 10,22 2,12" fill="#fff" stroke="#1f3b73" stroke-width="2.4"/></svg>M3　6月</div>全域1&nbsp;km产品与<br>H1检验报告</div>
+      <div class="ev"><div class="h"><svg viewBox="0 0 20 24"><polygon points="10,2 18,12 10,22 2,12" fill="#fff" stroke="#1f3b73" stroke-width="2.4"/></svg>M4　12月</div>DCP图谱、H2检验<br>与41城格局</div>
+    </div>
+    <div class="yr"><div class="y">2030年</div>
+      <div class="ev ws"><div class="h">工作坊2</div>第2季度，规范检验</div>
+      <div class="ev"><div class="h"><svg viewBox="0 0 20 24"><polygon points="10,2 18,12 10,22 2,12" fill="#fff" stroke="#1f3b73" stroke-width="2.4"/></svg>M5　6月</div>H3检验与已避免<br>负担估计</div>
+      <div class="ev"><div class="h"><svg viewBox="0 0 20 24"><polygon points="10,2 18,12 10,22 2,12" fill="#fff" stroke="#1f3b73" stroke-width="2.4"/></svg>M6　12月</div>矩阵、规范、政策简报<br>与代码发布；结题</div>
+    </div>
+  </div>
+
+  <!-- footnote -->
+  <div class="foot" style="grid-row:10">
+    <div class="lg"><span><i class="sv c41">全域</i>长三角41城·1&nbsp;km逐时·区县</span><span><i class="sv c3">三城</i>杭州·上海·南京中心城区·30&nbsp;m逐时·乡镇街道</span></div>
+    <div class="lg"><span><svg viewBox="0 0 20 24"><polygon points="10,2 18,12 10,22 2,12" fill="#fff" stroke="#1f3b73" stroke-width="2.4"/></svg>考核节点（编号同表2）</span><span><i class="dsh"></i>不确定性传递</span></div>
+  </div>
+</div>
+</div>
+<script>
+document.fonts.ready.then(function(){
+  var fig=document.getElementById('fig'), F=fig.getBoundingClientRect();
+  var svg=document.getElementById('lines');
+  svg.setAttribute('width',F.width); svg.setAttribute('height',F.height);
+  svg.setAttribute('viewBox','0 0 '+F.width+' '+F.height);
+  var NS='http://www.w3.org/2000/svg';
+  function R(id){var e=typeof id==='string'?document.getElementById(id):id, r=e.getBoundingClientRect();
+    return {l:r.left-F.left,t:r.top-F.top,r:r.right-F.left,b:r.bottom-F.top,cx:(r.left+r.right)/2-F.left,cy:(r.top+r.bottom)/2-F.top};}
+  var defs=document.createElementNS(NS,'defs'); svg.appendChild(defs);
+  var mk={};
+  function marker(c){ if(mk[c]) return mk[c]; var id='m'+Object.keys(mk).length;
+    var m=document.createElementNS(NS,'marker'); m.setAttribute('id',id); m.setAttribute('viewBox','0 0 10 10');
+    m.setAttribute('refX','8.5'); m.setAttribute('refY','5'); m.setAttribute('markerWidth','5.2'); m.setAttribute('markerHeight','5.2');
+    m.setAttribute('orient','auto-start-reverse'); m.setAttribute('markerUnits','strokeWidth');
+    var p=document.createElementNS(NS,'path'); p.setAttribute('d','M0,0 L10,5 L0,10 z'); p.setAttribute('fill',c); m.appendChild(p); defs.appendChild(m);
+    mk[c]=id; return id; }
+  function path(pts,c,w,opt){opt=opt||{};
+    var d='M'+pts.map(function(p){return p[0].toFixed(1)+','+p[1].toFixed(1)}).join(' L');
+    if(opt.halo){var h=document.createElementNS(NS,'path'); h.setAttribute('d',d); h.setAttribute('fill','none'); h.setAttribute('stroke','#fff'); h.setAttribute('stroke-width',w+7); h.setAttribute('stroke-linejoin','round'); svg.appendChild(h);}
+    var e=document.createElementNS(NS,'path'); e.setAttribute('d',d); e.setAttribute('fill','none'); e.setAttribute('stroke',c);
+    e.setAttribute('stroke-width',w); e.setAttribute('stroke-linejoin','round');
+    if(opt.dash) e.setAttribute('stroke-dasharray',opt.dash);
+    if(opt.arrow!==false) e.setAttribute('marker-end','url(#'+marker(c)+')');
+    svg.appendChild(e); return e;}
+  function dot(x,y,c){var e=document.createElementNS(NS,'circle'); e.setAttribute('cx',x); e.setAttribute('cy',y); e.setAttribute('r',6); e.setAttribute('fill',c); svg.appendChild(e);}
+  function label(text,x,y,c,cls){var d=document.createElement('div'); d.className=cls||'gl'; d.textContent=text; d.style.color=c; fig.appendChild(d);
+    var r=d.getBoundingClientRect(); d.style.left=(x-r.width/2)+'px'; d.style.top=(y-r.height/2)+'px'; return d;}
+  var C={g:'#3b7a3a',b:'#2a5c9a',o:'#bf5a36',p:'#5e3f8f',gr:'#9aa3ae',gold:'#b7862a'};
+  var gate=R('gate'), unc=R('unc'), integ=R('integ');
+  var cols=[['d1','p1','i1','t1','r1',C.g],['d2','p2','i2','t2','r2',C.b],['d3','p3','i3','t3','r3',C.o]];
+  // uncertainty dashed line (drawn first, under everything)
+  path([[unc.l-6,unc.cy],[unc.r+6,unc.cy]],C.gr,3,{dash:'10 8',arrow:false});
+  // place pill between column 1 and 2 arrows? -> centred on column 2 box
+  var pill=document.getElementById('uncpill'); var r2=R('r2'); pill.style.left=(r2.cx-unc.l)+'px';
+  cols.forEach(function(k,ix){
+    var d=R(k[0]),p=R(k[1]),i=R(k[2]),t=R(k[3]),r=R(k[4]),c=k[5]; var x=d.cx;
+    if(ix===0){ path([[x,d.b+2],[x,p.t-2]],c,4); }
+    else { path([[x,d.b+2],[x,gate.t-2]],c,4); path([[x,gate.b+2],[x,p.t-2]],c,4); }
+    path([[x,p.b+2],[x,i.t-2]],c,4);
+    path([[x,i.b+2],[x,t.t-2]],c,4);
+    path([[x,t.b+2],[x,r.t-2]],c,4);
+    path([[x,r.b+2],[x,integ.t-2]],c,4);
+  });
+  // "yes" labels below the gate
+  [R('p2'),R('p3')].forEach(function(p){ label('是',p.cx+22,(gate.b+p.t)/2,'#7a5410','yes'); });
+  // cross-column arrow A1: content 1 results -> content 2 identification
+  var R1=R('r1'),I2=R('i2'),T2=R('t2'),R2=R('r2'),P3=R('p3'),R3=R('r3'),T3=R('t3');
+  var g1x=R1.r+17;
+  path([[R1.r+2,R1.cy],[g1x,R1.cy],[g1x,I2.cy],[I2.l-2,I2.cy]],C.g,3.5);
+  label('逐时可归因降温ΔU',R1.r+40,(R('t1').t+R('t1').b)/2,C.g);
+  // cross-column arrow A2: content 1 & 2 results -> content 3 processing
+  var g2x=R2.r+17, busY=R2.b+17, x1=R1.r-46;
+  path([[x1,R1.b+2],[x1,busY],[g2x,busY]],C.b,3.5,{arrow:false,halo:true});
+  path([[R2.r+2,R2.cy],[g2x,R2.cy]],C.b,3.5,{arrow:false});
+  path([[g2x,busY],[g2x,P3.cy],[P3.l-2,P3.cy]],C.b,3.5);
+  dot(g2x,R2.cy,C.b); dot(x1,R1.b+1,C.b);
+  label('DCP修饰项与反事实情景',R2.r+40,(R('i3').t+T3.b)/2,C.b);
+  // feedback loop: integration band -> back up to results (right gutter)
+  var fx=R3.r+22;
+  path([[integ.r+2,integ.cy],[fx,integ.cy],[fx,R3.cy],[R3.r+3,R3.cy]],C.p,3.5,{dash:'9 6'});
+  label('反馈',fx+0,(R3.cy+integ.cy)/2,C.p);
+});
+</script>
+</body></html>
